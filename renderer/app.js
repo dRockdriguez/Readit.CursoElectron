@@ -31,6 +31,7 @@ $('#item-input').keyup((e) => {
     }
 })
 
+// Recibe la vuelta desde el proceso main cuando se añade un nuevo item
 ipcRenderer.on('new-item-success', (e, res) => {
     $('#add-modal').removeClass('is-active')
     $('#item-input').prop('disabled', false).val('')
