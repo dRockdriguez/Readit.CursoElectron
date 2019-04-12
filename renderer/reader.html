@@ -30,6 +30,15 @@
             </div>
         </section>
 
+        <a id="mark-read" class="is-hidden">
+            <div class="block">
+                <span class="tag is-large is-primary">
+                    <span class="icon">
+                        <i class="fa fa-check fa-inverse"></i>
+                    </span>&nbsp; Read
+                </span>
+            </div>
+        </a>
 
         <webview src="about:blank"></webview>
         
@@ -39,6 +48,7 @@
             
             // Get url from query
             const queryParams = queryString.parse(location.search)
+            let itemIndex = queryParams.index
             let url = decodeURIComponent(queryParams.url)
 
             // Load the remote content once webview is ready
@@ -47,11 +57,20 @@
             }).one('did-finish-load', () => {
                 // hide loader
                 $('#loader').fadeOut(100)
+                $('#mark-read').removeClass('is-hidden')
             }).on('did-fail-load', () => {
+                $('#mark-read').removeClass('is-hidden')
                 // Handle failed load
                 $('#loader .busy').addClass('is-hidden')
                 $('#loader').fadeIn(100)
                 $('#loader .failed').removeClass('is-hidden')
+            })
+
+            //Handle mark-read click
+            $('#mark-read').click(() => {
+                // Parent window
+                window.opener.eval(`deleteItem(${itemIndex})`)
+                window.close()
             })
         </script>
 
