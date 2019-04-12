@@ -3,6 +3,7 @@
 // All of the Node.js APIs are available in this process.
 const { ipcRenderer } = require('electron')
 const items = require('./items.js')
+const menu = require('./menu.js')
 
 // Navigate selected item with up/down keys
 $(document).keydown((e) => {

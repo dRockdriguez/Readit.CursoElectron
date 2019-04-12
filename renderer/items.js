@@ -23,7 +23,7 @@ exports.addItem = (item) => {
     $('#read-list').append(itemHTML)
 
     // Atach select event handler
-    $('.read-item').off('click', 'dblclick').on('click', this.selectItem).on('dblclick', this.openItem)
+    $('.read-item').off('click', 'dblclick').on('click', this.selectItem).on('dblclick', window.openItem)
 }
 
 exports.changeItem = (direction) => {
@@ -38,7 +38,7 @@ exports.changeItem = (direction) => {
     }
 }
 
-exports.openItem = () => {
+window.openItem = () => {
     if(!this.toReadItems.length) {
         return;
     }
@@ -54,7 +54,12 @@ exports.openItem = () => {
     let readerWin = window.open(readerWinURL, targetItem.data('title'))
 }   
 
-window.deleteItem = (i) => {
+window.deleteItem = (i = false) => {
+
+    // Set i to active item if not passed as argument
+    if(i === false) {
+        i = $('.read-item.is-active').index() - 1
+    }
     $('.read-item').eq(i).remove()
 
     this.toReadItems = this.toReadItems.filter((item, index) => {
@@ -73,4 +78,13 @@ window.deleteItem = (i) => {
     } else {
         $('#no-items').show()
     }
+}
+
+window.openInBrowser = () => {
+    if (!this.toReadItems.length) {
+        return
+    }
+    let targetItem = $('.read-item.is-active')
+
+    require('electron').shell.openExternal(targetItem.data('url'))
 }
