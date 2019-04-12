@@ -2,6 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const { ipcRenderer } = require('electron')
+const items = require('./items.js')
 
 // Show add-modal
 $('.open-add-modal').click(() => {
@@ -33,8 +34,18 @@ $('#item-input').keyup((e) => {
 
 // Recibe la vuelta desde el proceso main cuando se añade un nuevo item
 ipcRenderer.on('new-item-success', (e, res) => {
+    items.toReadItems.push(res)
+    items.saveItems()
+
+    // Add item
+    items.addItem(res)
+
     $('#add-modal').removeClass('is-active')
     $('#item-input').prop('disabled', false).val('')
     $('#add-button').removeClass('is-loading')
     $('.close-add-modal').removeClass('is-disabled')
 })
+
+// Add items when app loads
+if (items.toReadItems.length)
+    items.toReadItems.forEach(items.addItem)
