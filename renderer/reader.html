@@ -11,6 +11,26 @@
         </style>
     </head>
     <body>
+        <section id="loader" class="hero is-fullheight has-text-centered">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="busy">
+                        <h1 class="title">
+                            Cargando...
+                            <span class="icon is-large">
+                                <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+                            </span>
+                        </h1>
+                    </div>
+                    <div class="failed is-hidden">
+                        <h1 class="title">Failed to load</h1>
+                        <h2 class="subtitle">Please check your Network Connection</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <webview src="about:blank"></webview>
         
         <script>
@@ -23,7 +43,15 @@
 
             // Load the remote content once webview is ready
             $('webview').one('dom-ready', (e) => {
-                e.currentTarget.loadURL(url)
+               e.currentTarget.loadURL(url)
+            }).one('did-finish-load', () => {
+                // hide loader
+                $('#loader').fadeOut(100)
+            }).on('did-fail-load', () => {
+                // Handle failed load
+                $('#loader .busy').addClass('is-hidden')
+                $('#loader').fadeIn(100)
+                $('#loader .failed').removeClass('is-hidden')
             })
         </script>
 
