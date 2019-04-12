@@ -2,7 +2,7 @@
 // Modules
 const {app, ipcMain} = require('electron')
 const mainWindow = require('./mainWindow')
-
+const readItem = require('./readItem')
 
 // Enable Electron-Reload
 require('electron-reload')(__dirname)
@@ -27,7 +27,7 @@ app.on('activate', () => {
 
 
 ipcMain.on('new-item', (e, itemURL) => {
-  setTimeout(() => {
-   e.sender.send('new-item-success', 'Success!') 
-  }, 2000)
+  readItem(itemURL, (item) => {
+    e.sender.send('new-item-success', item) 
+  })  
 })
