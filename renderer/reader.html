@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel = "stylesheet" href="../bower_components/bulma/css/bulma.css">
+        <link rel = "stylesheet" href="../bower_components/font-awesome/css/fontawesome.min.css">
+        <link rel = "stylesheet" href="main.css">
+        <style>
+            html, body, webview {
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <webview src="about:blank"></webview>
+        
+        <script>
+            $ = require('jquery')
+            const queryString = require('query-string')
+            
+            // Get url from query
+            const queryParams = queryString.parse(location.search)
+            let url = decodeURIComponent(queryParams.url)
+
+            // Load the remote content once webview is ready
+            $('webview').one('dom-ready', (e) => {
+                e.currentTarget.loadURL(url)
+            })
+        </script>
+
+    </body>
+</html>

@@ -4,6 +4,18 @@
 const { ipcRenderer } = require('electron')
 const items = require('./items.js')
 
+// Navigate selected item with up/down keys
+$(document).keydown((e) => {
+    switch(e.key) {
+        case 'ArrowUp':
+            items.changeItem('up')
+        break;
+        case 'ArrowDown':
+            items.changeItem('down')
+        break;
+    }
+})
+
 // Show add-modal
 $('.open-add-modal').click(() => {
     $('#add-modal').addClass('is-active')
@@ -44,8 +56,23 @@ ipcRenderer.on('new-item-success', (e, res) => {
     $('#item-input').prop('disabled', false).val('')
     $('#add-button').removeClass('is-loading')
     $('.close-add-modal').removeClass('is-disabled')
+
+    if (items.toReadItems.length === 1){
+        $('.read-item:first()').addClass('is-active')
+    }
+
 })
 
 // Add items when app loads
-if (items.toReadItems.length)
+if (items.toReadItems.length) {
+    console.log( $('.read-item:first()'))
     items.toReadItems.forEach(items.addItem)
+    $('.read-item:first()').addClass('is-active')
+}
+
+$('#search').keyup((e) => {
+    let filter = $(e.currentTarget).val()
+    $('.read-item').each((i, el) => {
+        $(el).text().toLowerCase().includes(filter) ? $(el).show(): $(el).hide()
+    })
+})

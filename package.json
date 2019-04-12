@@ -28,6 +28,7 @@
     "electron-reload": "*"
   },
   "dependencies": {
-    "jquery": "^3.4.0"
+    "jquery": "^3.4.0",
+    "query-string": "^6.4.2"
   }
 }
