@@ -46,7 +46,7 @@ exports.check = () => {
             progressWin.on('close', () => {
                 progressWin = null
             })
-            autoUpdater.on('progress', (d) => {
+            autoUpdater.on('download-progress', (d) => {
                 autoUpdater.logger.info('download progress', d)
                 downloadProgress = d.percent
             })
