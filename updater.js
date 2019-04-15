@@ -1,0 +1,61 @@
+const { autoUpdater} = require('electron-updater')
+const { dialog, BrowserWindow, ipcMain } = require('electron')
+
+autoUpdater.logger = require('electron-log')
+autoUpdater.logger.transports.file.level = "info"
+
+// Disable auto downloading
+autoUpdater.autoDownload = false;
+exports.check = () => {
+    autoUpdater.checkForUpdates()
+
+    // Listen for download found
+    autoUpdater.on('update-available', () => {
+        //Track progress percent
+        let downloadProgress = 0
+
+        dialog.showMessageBox({
+            type: 'info',
+            title: 'Actualización disponible',
+            message: 'Nueva versión es disponible. ¿Quieres descargarla ahora?',
+            buttons: [
+                'Update',
+                'No'
+            ]
+        }, (buttonIndex) => {
+            if(buttonIndex !== 0) {
+                return
+            }
+            // Start download an show progress
+            autoUpdater.downloadUpdate()
+
+            //Progress window
+            let progressWin = new BrowserWindow({
+                width: 350,
+                height: 35,
+                useContentSize: true,
+                autoHideMenuBar: true,
+                maximizable: false,
+                fullscreen: false,
+                fullscreenable: false,
+                resizable: false
+            })
+            autoUpdater.logger.info('despues de ventana de progress')
+
+            progressWin.loadURL(`file://${__dirname}/renderer/progress.html`)
+            progressWin.on('close', () => {
+                progressWin = null
+            })
+            autoUpdater.on('progress', (d) => {
+                autoUpdater.logger.info('download progress', d)
+                downloadProgress = d.percent
+
+                autoUpdater.logger.info(downloadProgress)
+            })
+
+            ipcMain.on('download-progress-request', (e) => {
+                e.returnValue = downloadProgress
+            })
+        })
+    })
+}

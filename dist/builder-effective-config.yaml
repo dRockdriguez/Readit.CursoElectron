@@ -6,4 +6,6 @@ win:
   certificateFile: private/masterelectron.pfx
   verifyUpdateCodeSignature: false
   publisherName: masterelectron
+  publish:
+    - github
 electronVersion: 4.1.4
