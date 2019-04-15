@@ -49,12 +49,24 @@ exports.check = () => {
             autoUpdater.on('progress', (d) => {
                 autoUpdater.logger.info('download progress', d)
                 downloadProgress = d.percent
-
-                autoUpdater.logger.info(downloadProgress)
             })
 
             ipcMain.on('download-progress-request', (e) => {
                 e.returnValue = downloadProgress
+            })
+
+            autoUpdater.on('update-downloaded', () => {
+                // close progresswindow
+                if(progressWin) progressWin.close()
+                dialog.showMessageBox({
+                    type: 'info',
+                    title: 'Descargado',
+                    message: 'Nueva versión descargada',
+                    buttons: ['Yes', 'Later']
+                }, (buttonIndex) => {
+                    if (buttonIndex === 0) autoUpdater.quitAndInstall()
+                })
+
             })
         })
     })
