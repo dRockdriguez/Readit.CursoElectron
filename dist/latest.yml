@@ -1,8 +1,8 @@
 version: 2.0.0
 files:
   - url: Readit-Setup-2.0.0.exe
-    sha512: bvOn3zjTApzGQpen4OBqnxsCqK3xIsmeialX8y85c/8+KAl5gp8c+aoAGoHUlOatqchsc2qAmU/HHflNUfSIlg==
-    size: 50933384
+    sha512: hRulDJsj41zb7VO3TD3W/pVcvPxv9OCf/ByG2+c/AU0HhjM4ePO29omp315da4b0W56FiGhSUkeaPNlwV1h1uA==
+    size: 50933752
 path: Readit-Setup-2.0.0.exe
-sha512: bvOn3zjTApzGQpen4OBqnxsCqK3xIsmeialX8y85c/8+KAl5gp8c+aoAGoHUlOatqchsc2qAmU/HHflNUfSIlg==
-releaseDate: '2019-04-15T11:11:57.922Z'
+sha512: hRulDJsj41zb7VO3TD3W/pVcvPxv9OCf/ByG2+c/AU0HhjM4ePO29omp315da4b0W56FiGhSUkeaPNlwV1h1uA==
+releaseDate: '2019-04-15T11:19:40.702Z'
