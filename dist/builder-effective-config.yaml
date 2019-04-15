@@ -2,4 +2,8 @@ directories:
   output: dist
   buildResources: .
 appId: com.masterelectron.readit
+win:
+  certificateFile: private/masterelectron.pfx
+  verifyUpdateCodeSignature: false
+  publisherName: masterelectron
 electronVersion: 4.1.4
